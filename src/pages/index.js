@@ -2,10 +2,87 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import Link from 'next/link'
+import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
+
+import setLanguage from "next-translate/setLanguage";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { t } = useTranslation();
+  const router = useRouter();
+
+
+  const chooseLanguage = async ( countryCode, lng ) => { 
+    
+    //   closeModal()
+    //   const newLocale = `${countryCode}-${lng}`;
+    //   await setLanguage(newLocale);
+    
+    //   const currentPath = router.asPath;
+    //   const translatedPath = UsePathTranslation(currentPath, newLocale);
+      
+    //   // Construct the new URL with the new locale and the translated path
+    //   const newUrl = `/${newLocale}${translatedPath}`; 
+    //   router.replace(newUrl);
+    
+    //  fetchStyle();
+    //  fetchAll(countryCode);
+  
+  
+  
+  
+    await setLanguage(`${countryCode}-${lng}`);
+
+    const newUrl =`/${countryCode}-${lng}${router.asPath}`;
+    router.replace(newUrl);
+  
+    
+    };
+
+  console.log(router.locale,"cdskdc")
+
+
+const countries =
+[
+  {
+    "id": 3011,
+    "country": "german",
+    "language": "german",
+    "image": "/spain.svg",
+    "countryCode": "ch",
+    "lng": "en",
+    "set": "ch-en"
+  },
+
+  {
+    "id": 301,
+    "country": "german",
+    "language": "german",
+    "image": "/spain.svg",
+    "countryCode": "de",
+    "lng": "de",
+    "set": "de-de"
+  },
+  {
+    "id": 30,
+    "country": "España",
+    "language": "Español",
+    "image": "/spain.svg",
+    "countryCode": "es",
+    "lng": "es",
+    "set": "es-es"
+  },
+  
+]
+
+
+
+
+
+
   return (
     <>
       <Head>
@@ -15,99 +92,75 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{" "}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
+        
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
+<div style={{"display":"flex" ,"justifyContent":"space-between" ,'gap':"11px"}}>
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
+<Link href={`/${router.locale}/${t('common:routes.klarna')}`}>
+      Klarna
+    </Link>
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
+    <Link href={`/${router.locale}/${t('common:routes.for-tattoo-artists')}`}>
+    Artist
+    </Link>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+<Link href="/for-tattoo-artists"></Link>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+<ul>
+                  {countries.map((el) => {
+                    return (
+                      <li key={el.id}>
+                        <button
+                          className={
+                            router.locale === el.set
+                              ? "activeCountry"
+                              : "inActivecountry"
+                              
+                          }
+                          disabled={router.locale === el.set}
+                          onClick={() => chooseLanguage(el.countryCode, el.lng  ,el.country)}
+                        >
+                          <Image
+                            alt={`${el.country}${"-"}${el.language}`}
+                            src={el.image}
+                            width={32}
+                            height={32}
+                          />
+                          <span>
+                            <h4>{el.country}</h4>
+                            <p>{el.language}</p>
+                          </span>
+                          {/* <Image
+                            width={24}
+                            height={25}
+                            src="/icon_language_link.svg"
+                            alt=""
+                            className="icon_language_link"
+                          /> */}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+   
+
+
       </main>
     </>
   );

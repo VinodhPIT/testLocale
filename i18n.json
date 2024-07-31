@@ -1,0 +1,15 @@
+{
+    "locales": [
+      "ch-en",
+      "de-de",
+      "es-es"
+      
+    ],
+    "defaultLocale": "ch-en",
+    "pages": {
+      "*": ["common"],
+      "/": ["home"],
+      "/about": ["about"]
+    }
+  }
+  
