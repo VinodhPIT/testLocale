@@ -5,7 +5,7 @@ import styles from "@/styles/Home.module.css";
 import Link from 'next/link'
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
-
+import UsePathTranslation from '@/hooks/useee';
 import setLanguage from "next-translate/setLanguage";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,27 +17,25 @@ export default function Home() {
 
   const chooseLanguage = async ( countryCode, lng ) => { 
     
-    //   closeModal()
-    //   const newLocale = `${countryCode}-${lng}`;
-    //   await setLanguage(newLocale);
+ 
+      const newLocale = `${countryCode}-${lng}`;
+      await setLanguage(newLocale);
     
-    //   const currentPath = router.asPath;
-    //   const translatedPath = UsePathTranslation(currentPath, newLocale);
+      const currentPath = router.asPath;
+      const translatedPath = UsePathTranslation(currentPath, newLocale);
       
-    //   // Construct the new URL with the new locale and the translated path
-    //   const newUrl = `/${newLocale}${translatedPath}`; 
-    //   router.replace(newUrl);
-    
-    //  fetchStyle();
-    //  fetchAll(countryCode);
-  
-  
-  
-  
-    await setLanguage(`${countryCode}-${lng}`);
+      // Construct the new URL with the new locale and the translated path
+      const newUrl = `/${newLocale}${translatedPath}`; 
+      router.replace(newUrl);
 
-    const newUrl =`/${countryCode}-${lng}${router.asPath}`;
-    router.replace(newUrl);
+  
+  
+  
+  
+    // await setLanguage(`${countryCode}-${lng}`);
+
+    // const newUrl =`/${countryCode}-${lng}${router.asPath}`;
+    // router.replace(newUrl);
   
     
     };
